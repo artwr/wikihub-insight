@@ -5,7 +5,7 @@ Wikihub
 ##Github-like stats for Wikipedia Pages
 --------
 
-![The Wikihub Pipeline](images/pipeline.pdf "Jaunt Pipeline")
+![The Wikihub Pipeline](images/pipeline2.png "Jaunt Pipeline")
 
 The latest [Wikipedia XML dumps](http://dumps.wikimedia.org/enwiki/latest/) are downloaded from the Wikipedia Servers. Preprocessing is done in Python with minimal memory footprint for conversion to TSV.
 
