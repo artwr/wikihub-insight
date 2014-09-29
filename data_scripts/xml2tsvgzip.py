@@ -120,7 +120,7 @@ def main():
     # wkh = WikiHandler()
     # incparser.setContentHandler(wkh)
     # filename = 'enwiki-20121101-stub-meta-history1.xml.gz'
-    for filename in fnmatch.filter(os.listdir('.'), 'enwiki-20121101-stub-meta-history?*.xml.gz'):
+    for filename in fnmatch.filter(os.listdir('.'), 'enwiki-*-stub-meta-history?*.xml.gz'):
         basefilename = os.path.splitext(os.path.splitext(filename)[0])[0]
         foutname = basefilename+".txt.gz"
         with gzip.open(filename, 'rb') as f:
