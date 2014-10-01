@@ -26,10 +26,25 @@ def getMonthlyData(title, ymrange = ("2001-01","2012-11")):
     wes = conn.table('wikieditssmall')
     we = conn.table('wikiedits')
     titlestr = title.encode('ascii','ignore')
-    years = range(2001,2012)
+    startym = ymrange[0].split("-")
+    endym = ymrange[1].split("-")
+    starty = startym[0]
+    startm = startym[1]
+    endy = endym[0]
+    endm = endym[1]
     data_dict = {}
-    for y in years:
+    for m in range(startm,13):
+        month = format(m, '02')
+        rowval=wes.row(title+'_'+str(starty)+'_'+month)
+        if rowval is not None:
+            if rowval != {}:
+                val = rowval["count:editcount"]
+                if val is not None:
+                    data_dict[str(starty)+_+str(m)] = val
+    for y in range(startm+1,endy):
         year=str(y)
+        for m in range(startm,13):
+        
         rowval=wes.row(title+'_'+year)
         if rowval is not None:
             if rowval != {}:
