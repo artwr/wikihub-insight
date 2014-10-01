@@ -123,7 +123,7 @@ def main():
     # filename = 'enwiki-20121101-stub-meta-history1.xml.gz'
     # foutname = 'enwiki-20121101-stub-meta-history1.txt'
     filename = '../sample_data/sample_wiki.xml.gz'
-    foutname = 'sample_wiki.txt'
+    foutname = '../sample_data/sample_wiki.txt'
     with gzip.open(filename, 'rb') as f:
         with open(foutname, 'w') as fout:
             wkh = WikiHandler(fout)
