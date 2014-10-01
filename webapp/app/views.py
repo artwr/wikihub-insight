@@ -2,7 +2,7 @@ from flask import render_template, jsonify
 from flask import request, Response
 from app import app
 from helpers import getYearlyData
-from helpers import getMonthlyData
+#from helpers import getMonthlyData
 from helpers import getDailyData
 import json
 #from starbase import Connection
