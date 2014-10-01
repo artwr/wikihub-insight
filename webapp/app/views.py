@@ -46,10 +46,10 @@ def test():
     
 
 @app.route('/api/page/<string:title>', methods=['GET'])
-def api():
-    qs = request.query_string
-    titleparam = request.args.get("title")
-    yearly_data = getYearlyData(titleparam)
+def api(title):
+    #qs = request.query_string
+    #titleparam = request.args.get("title")
+    yearly_data = getYearlyData(title)
     # Queries the DB and returns data
     # cur = db.cursor()   
     return jsonify(yearly_data)
