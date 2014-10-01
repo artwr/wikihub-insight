@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, jsonify
 from flask import request, Response
 from app import app
 from helpers import getYearlyData
@@ -45,11 +45,14 @@ def test():
     return request.query_string + "\n<br>\n" + request.args.get("user")
     
 
-# @app.route('/api/gdelt/event/<int:globaleventid>', methods=['GET'])
-# def api():
-#     # Queries the DB and returns data
-#     # cur = db.cursor()   
-#     return render_template('api.html')
+@app.route('/api/page/<string:title>', methods=['GET'])
+def api():
+    qs = request.query_string
+    titleparam = request.args.get("title")
+    yearly_data = getYearlyData(titleparam)
+    # Queries the DB and returns data
+    # cur = db.cursor()   
+    return jsonify(yearly_data)
 
 # @app.route('/api/top', methods=['GET'])
 # def api():
