@@ -7,4 +7,4 @@ gunicorn==18.0
 itsdangerous==0.24
 simplejson==3.5.2
 wsgiref==0.1.2
-starbase
+happybase
