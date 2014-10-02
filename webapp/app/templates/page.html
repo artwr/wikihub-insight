@@ -4,12 +4,12 @@
   <div class="container">
     <div class="starter-template">
       <h1>{{title}}</h1>
-      <div id="graph1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      <div id="plot" style="min-width: 310px; height: 400px"></div>
     </div>
   </div>
   <script>
   $(function () {
-    $('#graph1').highcharts({
+    $('#plot').highcharts({
         title: {
             text: 'Monthly Average Temperature',
             x: -20 //center
