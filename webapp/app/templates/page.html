@@ -1,5 +1,10 @@
 {% extends "layout/base.html" %}
 
+{% block head %}
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+{% endblock %}
+
 {% block content %}
   <div class="container">
     <div class="starter-template">
@@ -34,7 +39,7 @@
             }]
         },
         tooltip: {
-            valueSuffix: ' edits'
+            valueSuffix: 'edits'
         },
         legend: {
             layout: 'vertical',
