@@ -31,7 +31,7 @@ def page():
     qs = request.query_string 
     titleparam = request.args.get("title")
     yearly_data = getYearlyData(titleparam)
-    return qs + " " + str(count2011)
+    return render_template('page.html', title=titleparam)
 
 @app.route('/demo', methods=['GET'])
 def demo():
