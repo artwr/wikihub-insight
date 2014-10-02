@@ -10,6 +10,11 @@
   <script>
   $(function () {
     $('#plot').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 1,//null,
+            plotShadow: false
+        },
         title: {
             text: 'Monthly Average Temperature',
             x: -20 //center
