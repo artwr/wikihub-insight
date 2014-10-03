@@ -2,8 +2,9 @@ from flask import render_template, jsonify
 from flask import request, Response
 from app import app
 from helpers import getYearlyData
+from helpers import getData
 #from helpers import getMonthlyData
-from helpers import getDailyData
+#from helpers import getDailyData
 import json
 #from starbase import Connection
 import happybase
@@ -40,17 +41,21 @@ def demo():
 
 @app.route('/test/', methods=['GET'])
 def test():
-    return request.query_string + "\n<br>\n" + request.args.get("user")
+    return request.query_string
     
 
-@app.route('/api/page/<string:title>', methods=['GET'])
-def api(title):
+@app.route('/api/<string:granularity>/<string:title>', methods=['GET'])
+def api(title,granularity):
+    if granularity not in ("Yearly","Monthly","Daily"):
+        raise InvalidUsage('This view is gone', status_code=410)
+    g_code = granularity[0]
     #qs = request.query_string
     #titleparam = request.args.get("title")
-    yearly_data = getYearlyData(title)
+    data = getYearlyData(title)
+    #data = getData(title, time_granularity=g_code)
     # Queries the DB and returns data
     # cur = db.cursor()   
-    return jsonify(yearly_data)
+    return jsonify(data)
 
 # @app.route('/api/top', methods=['GET'])
 # def api():
