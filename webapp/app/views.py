@@ -32,7 +32,7 @@ def contact():
 def page(): 
     qs = request.query_string
     if request.args.get("title") is None:
-        raise InvalidUsage('You need to pass a title parameter', status_code=400)
+        raise InvalidAPIUsage('You need to pass a title parameter', status_code=400)
     titleparam = request.args.get("title")
     yearly_data = getYearlyData(titleparam)
     return render_template('page.html', title=titleparam)
@@ -60,7 +60,7 @@ def testquery():
 def api(title,granularity):
     title_Hbase = title.replace('_',' ')
     if granularity.lower() not in ("yearly","monthly","daily"):
-        raise InvalidUsage('Granularity is one of (Yearly,Monthly,Daily)', status_code=400)
+        raise InvalidAPIUsage('Granularity is one of (Yearly,Monthly,Daily)', status_code=400)
     g_code = granularity[0].upper()
     #qs = request.query_string
     #titleparam = request.args.get("title")
