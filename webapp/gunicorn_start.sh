@@ -25,7 +25,6 @@ exec gunicorn wikihub_worker:app -b 0.0.0.0:80 \
   --name $NAME \
   --workers $NUM_WORKERS \
   --user=$USER --group=$GROUP \
-  --reload \
   --log-level=debug \
   --bind=unix:$SOCKFILE
 
