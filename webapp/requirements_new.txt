@@ -2,7 +2,6 @@ distribute
 setuptools
 six
 numpy
-dateutil
 tornado
 pyparsing
 pycxx
