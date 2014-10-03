@@ -22,7 +22,13 @@
       <div id="plot" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     </div>
   </div>
-  <!-- <script>
+  <script>
+  var caldata = "{{ cal_data }}";
+  prompt("caldata",caldata);
+  var pdata = "{{ plot_data }}";
+  prompt("plot_data",pdata);
+  </script>
+  {# <script>
   var cal = new CalHeatMap();
     cal.init({
         itemSelector: "#cal-heatmap",
@@ -81,7 +87,7 @@
         }]
     });
 });
-  </script>
+  </script> #}
 {% endblock %}
 
 {% block footer %}
