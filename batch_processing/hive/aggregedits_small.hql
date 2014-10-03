@@ -1,7 +1,6 @@
 --
 set hive.map.aggr=true;
--- Test queries
-
+-- 
 USE wiki;
 
 --drop table IF EXISTS stats_small;

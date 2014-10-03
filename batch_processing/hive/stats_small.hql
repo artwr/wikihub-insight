@@ -22,4 +22,4 @@ select title, pid, ns, count(distinct contributor_username) as unique_users, cou
 from wiki_small
 where ns = 0
 group by title, pid, ns
-order by count(rid);
+order by total_edits;
