@@ -5,7 +5,6 @@ numpy
 tornado
 pyparsing
 python-dateutil
-libagg
 Flask
 Flask-Script
 Jinja2
