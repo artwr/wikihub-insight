@@ -4,7 +4,7 @@ six
 numpy
 tornado
 pyparsing
-pycxx
+python-dateutil
 libagg
 Flask
 Flask-Script
