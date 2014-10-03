@@ -39,7 +39,7 @@ def page():
     yearly_data = getYearlyData(titleparam)
     years = []
     values = []
-    for t in sorted(dict.items(), key=lambda x: x[1]):
+    for t in sorted(yearly_data.items(), key=lambda x: x[1]):
         years.append(t[0])
         values.append(t[1])
     return render_template('page.html', title=titleparam, cal_data=str(caldaily_data), plot_data=str(yearly_data),plot_x=years,plot_y=values)
