@@ -5,9 +5,6 @@ from datetime import datetime, date
 import calendar
 import pandas
 
-
-
-
 def getPoint(query_string):
     conn = happybase.Connection('localhost')
     conn.open()
@@ -34,8 +31,7 @@ def getYearlyData(title, yrange = ("2001","2014")):
     for y in years:
         year=str(y)
         rowval=wes.row(title+'_Y_'+year)
-        if rowval is not None:
-            if rowval != {}:
+        if rowval is not None and rowval != {}:
                 val = rowval["count:edits"]
                 if val is not None:
                     data_dict[y] = val
@@ -56,8 +52,7 @@ def getYearlyData(title, yrange = ("2001","2014")):
 
 def date_string_to_ts(date_str,granularity,startperiod = True):
     # Number of days in each month
-    modaynum = {'01': 31, '02': 28, '03': 31, '04': 30, '05': 31, \
-    '06': 30, '07': 31, '08': 31, '09': 30, '10': 31, '11': 30, '12': 31}
+    modaynum = {'01': 31, '02': 28, '03': 31, '04': 30, '05': 31, '06': 30, '07': 31, '08': 31, '09': 30, '10': 31, '11': 30, '12': 31}
     if granularity not in ("Y","M","D"):
         return None
     elif granularity=="D":
@@ -71,8 +66,8 @@ def date_string_to_ts(date_str,granularity,startperiod = True):
         if startperiod:
             d=date(int(date_str[:4]),1,1)
         else:
-            d=date(int(date_str[:4]),12,31
-    return calendar.timegm(d.timetuple())    
+            d=date(int(date_str[:4]),12,31)
+    return calendar.timegm(d.timetuple()) 
 
 
 
