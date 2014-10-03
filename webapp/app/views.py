@@ -35,8 +35,10 @@ def page():
     if request.args.get("title") is None:
         raise InvalidAPIUsage('You need to pass a title parameter', status_code=400)
     titleparam = request.args.get("title")
+    caldaily_data = getRangedData(titleparam, time_granularity = "D", start="2014-04-01", end="2014-09-30")
     yearly_data = getYearlyData(titleparam)
-    return render_template('page.html', title=titleparam)
+    #
+    return render_template('page.html', title=titleparam, cal_data=jsonify(caldaily_data), plot_data=jsonify(yearly_data))
 
 @app.route('/demo', methods=['GET'])
 def demo():
