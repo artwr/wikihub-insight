@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import happybase
+import time
 import pandas
 
 def getYearlyData(title, yrange = ("2001","2014")):
@@ -15,13 +16,14 @@ def getYearlyData(title, yrange = ("2001","2014")):
         rowval=wes.row(title+'_'+year)
         if rowval is not None:
             if rowval != {}:
-                val = rowval["count:editcount"]
+                val = rowval["count:edits"]
                 if val is not None:
                     data_dict[y] = val
     conn.close()
     return data_dict
 
 def getData(title, time_granularity = "Y", range = ("2001","2014")):
+    start_t = time.time()
     conn = happybase.Connection('localhost')
     conn.open()
     wes = conn.table('wikieditssmall')
@@ -34,10 +36,12 @@ def getData(title, time_granularity = "Y", range = ("2001","2014")):
         rowval=wes.row(title+'_'+year)
         if rowval is not None:
             if rowval != {}:
-                val = rowval["count:editcount"]
+                val = rowval["count:edits"]
                 if val is not None:
                     data_dict[y] = val
     conn.close()
+    end_t = time.time()
+    elapsed_t = start_t-end_t
     return data_dict
 
 def getStats(title):
@@ -53,7 +57,7 @@ def getStats(title):
         rowval=wes.row(title+'_'+year)
         if rowval is not None:
             if rowval != {}:
-                val = rowval["count:editcount"]
+                val = rowval["count:edits"]
                 if val is not None:
                     data_dict[y] = val
     conn.close()
