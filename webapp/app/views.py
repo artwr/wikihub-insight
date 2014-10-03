@@ -37,7 +37,12 @@ def page():
     titleparam = request.args.get("title")
     caldaily_data = getRangedData(titleparam, time_granularity = "D", start="2014-04-01", end="2014-09-30")
     yearly_data = getYearlyData(titleparam)
-    return render_template('page.html', title=titleparam, cal_data=str(caldaily_data), plot_data=str(yearly_data))
+    years = []
+    values = []
+    for t in sorted(dict.items(), key=lambda x: x[1]):
+        years.append(t[0])
+        values.append(t[1])
+    return render_template('page.html', title=titleparam, cal_data=str(caldaily_data), plot_data=str(yearly_data),plot_x=years,plot_y=values)
 
 @app.route('/demo', methods=['GET'])
 def demo():
