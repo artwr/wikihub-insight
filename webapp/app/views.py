@@ -37,7 +37,7 @@ def page():
     titleparam = request.args.get("title")
     caldaily_data = getRangedData(titleparam, time_granularity = "D", start="2014-04-01", end="2014-09-30")
     yearly_data = getYearlyData(titleparam)
-    return json.dumps(caldaily_data)
+    return json.dumps(yearly_data)
     #
     #return render_template('page.html', title=titleparam, cal_data=caldaily_data, plot_data=yearly_data)
 
