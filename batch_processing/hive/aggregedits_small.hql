@@ -13,7 +13,7 @@ drop table IF EXISTS editcount_small;
 -- drop table IF EXISTS editcount_all;
 
 create table stats_small
-as select title, pid, ns, count(contributor_username) as total_users, count(distinct contributor_username) as unique_users, count(distinct contributor_id) as unique_ids, count(distinct contributor_ip) as unique_ips, count(rid)
+as select title, pid, ns, count(distinct contributor_username) as unique_users, count(distinct contributor_id) as unique_ids, count(distinct contributor_ip) as unique_ips, count(rid) as total_edits
 from wiki_small
 where ns = 0
 group by title, pid, ns;
