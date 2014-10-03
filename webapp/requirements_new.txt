@@ -1,4 +1,12 @@
+distribute
 setuptools
+six
+numpy
+dateutil
+tornado
+pyparsing
+pycxx
+libagg
 Flask
 Flask-Script
 Jinja2
@@ -9,6 +17,5 @@ itsdangerous
 simplejson
 wsgiref
 happybase
-numpy
 matplotlib
 pandas
