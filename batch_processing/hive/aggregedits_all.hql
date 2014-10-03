@@ -9,7 +9,7 @@ drop table IF EXISTS editcount_all;
 create table rev_all
 as select title, pid, ns, SUBSTR(ts,0,4) as year, SUBSTR(ts,6,2) as month, SUBSTR(ts,9,2) as day, rid
 from wikiedits
-where ns =0
+where ns =0;
 
 create table editcount_all
 as select * 
