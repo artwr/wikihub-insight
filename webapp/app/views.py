@@ -3,6 +3,7 @@ from flask import request, Response
 from app import app
 from helpers import getYearlyData
 from helpers import getData
+from helpers import getPoint
 #from helpers import getMonthlyData
 #from helpers import getDailyData
 import json
@@ -44,6 +45,15 @@ def demo():
 @app.route('/test/', methods=['GET'])
 def test():
     return request.query_string
+
+@app.route('/testquery/', methods=['GET'])
+def test():
+    rs = request.query_string
+    if request.args.get("query") is not None:
+        hqs = request.args.get("query")
+        return getPoint(hqs)
+    else:
+        return None
     
 
 @app.route('/api/<string:granularity>/<string:title>', methods=['GET'])

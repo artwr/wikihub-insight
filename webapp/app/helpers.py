@@ -3,6 +3,21 @@ import happybase
 import time
 import pandas
 
+def getPoint(query_string):
+    conn = happybase.Connection('localhost')
+    conn.open()
+    wes = conn.table('wikieditssmall')
+    we = conn.table('wikiedits')
+    rowval=wes.row(title+'_Y_'+year)
+    if rowval is not None and rowval != {}:
+            val = rowval["count:edits"]
+            if val is not None:
+                datapoint = val
+                conn.close()
+                return val
+    conn.close()
+    return None
+
 def getYearlyData(title, yrange = ("2001","2014")):
     conn = happybase.Connection('localhost')
     conn.open()
