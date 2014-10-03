@@ -31,10 +31,12 @@
         itemSelector: "#cal-heatmap",
         domain: "month",
         subDomain: "day",
-        start: new Date(2014, 2, 01),
+        start: new Date(2014, 05, 01),
         cellSize: 20,
         subDomainTextFormat: "%d",
+        considerMissingDataAsZero: true,
         range: 6,
+        data: {{cal_data | safe}}
         displayLegend: false
     });
   </script>
@@ -47,12 +49,12 @@
             plotShadow: false
         },
         title: {
-            text: 'Monthly Average Temperature',
+            text: 'Yearly Edit Count',
             x: -20 //center
         },
         xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            categories: ['2001', '2002', '2003', '2004', '2005', '2006',
+                '2007', '2008', '2009', '2010', '2011', '2012']
         },
         yAxis: {
             title: {
@@ -74,8 +76,8 @@
             borderWidth: 0
         },
         series: [{
-            name: 'Tokyo',
-            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+            name: {{title}},
+            data: [70, 69, 95, 145, 182, 215, 252, 265, 233, 183, 139, 96]
         }]
     });
 });
