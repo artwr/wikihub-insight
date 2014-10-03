@@ -15,9 +15,22 @@
   <div class="container">
     <div class="starter-template">
       <h1>{{title}}</h1>
+      <div id="cal-heatmap"></div>
       <div id="plot" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     </div>
   </div>
+  <script>
+  var cal = new CalHeatMap();
+    cal.init({
+        itemSelector: "#domain-a",
+        domain: "month",
+        subDomain: "day",
+        cellSize: 20,
+        subDomainTextFormat: "%d",
+        range: 1,
+        displayLegend: false
+    });
+  </script>
   <script>
   $(function () {
     $('#plot').highcharts({
