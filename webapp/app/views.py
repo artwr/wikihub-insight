@@ -29,7 +29,9 @@ def contact():
 
 @app.route('/page/', methods=['GET'])
 def page(): 
-    qs = request.query_string 
+    qs = request.query_string
+    if request.args.get("title") is None:
+        raise InvalidUsage('You need to pass a title parameter', status_code=400)
     titleparam = request.args.get("title")
     yearly_data = getYearlyData(titleparam)
     return render_template('page.html', title=titleparam)
@@ -46,9 +48,10 @@ def test():
 
 @app.route('/api/<string:granularity>/<string:title>', methods=['GET'])
 def api(title,granularity):
-    if granularity not in ("Yearly","Monthly","Daily"):
-        raise InvalidUsage('This view is gone', status_code=410)
-    g_code = granularity[0]
+    title_Hbase = title.replace('_',' ')
+    if granularity.lower() not in ("yearly","monthly","daily"):
+        raise InvalidUsage('Granularity is one of (Yearly,Monthly,Daily)', status_code=400)
+    g_code = granularity[0].upper()
     #qs = request.query_string
     #titleparam = request.args.get("title")
     data = getYearlyData(title)
