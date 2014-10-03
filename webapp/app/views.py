@@ -38,7 +38,7 @@ def page():
     caldaily_data = getRangedData(titleparam, time_granularity = "D", start="2014-04-01", end="2014-09-30")
     yearly_data = getYearlyData(titleparam)
     #
-    return render_template('page.html', title=titleparam, cal_data=jsonify(caldaily_data), plot_data=jsonify(yearly_data))
+    return render_template('page.html', title=titleparam, cal_data=json.dumps(caldaily_data), plot_data=json.dumps(yearly_data))
 
 @app.route('/demo', methods=['GET'])
 def demo():
