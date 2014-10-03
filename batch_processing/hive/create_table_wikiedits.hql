@@ -1,11 +1,11 @@
--- TODO : replace <user_name> with your username
--- TODO : replace <login_name> with actual login name
+--
 CREATE DATABASE IF NOT EXISTS wiki;
 USE wiki;
 
 drop table IF EXISTS wikiedits;
 drop table IF EXISTS wiki_small;
 
+-- Using just the first history file in hdfs:/data/sample
 create external table if not exists wiki_small (
 title  STRING,
 pid    BIGINT,
