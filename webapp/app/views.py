@@ -3,6 +3,7 @@ from flask import request, Response
 from app import app
 from helpers import getYearlyData
 from helpers import getData
+from helpers import getRangedData
 from helpers import getPoint
 #from helpers import getMonthlyData
 #from helpers import getDailyData
@@ -54,10 +55,36 @@ def testquery():
         return getPoint(hqs)
     else:
         return None
-    
+
+@app.route('/api', methods=['GET'])
+def query_api():
+    rs = request.query_string
+    if request.args.get("title") is None:
+        raise InvalidAPIUsage('You need to pass a title parameter', status_code=400)
+    else:
+        title=request.args.get("title")
+    if request.args.get("granularity") is None:
+        raise InvalidAPIUsage('You need to set a granularity among (Yearly,Monthly,Daily)', status_code=400)
+    elif granularity.lower() not in ("yearly","monthly","daily"):
+        raise InvalidAPIUsage('Granularity is one of (Yearly,Monthly,Daily)', status_code=400)
+    else:
+        gr_raw=request.args.get("granularity")
+        gr=gr_raw[0].upper()
+    if request.args.get("start") is None or request.args.get("end") is None:
+        raise InvalidAPIUsage('You need to set both start and end parameters', status_code=400)
+    else:
+        start=request.args.get("start")
+        end=request.args.get("end")
+        data = getRangedData(title,time_granularity=gr,start=start,end=end)
+        return jsonify(data)
+    #data = getYearlyData(title)
+    #data = getData(title, time_granularity=g_code)
+    # Queries the DB and returns data
+    # cur = db.cursor()   
+    return "Error"   
 
 @app.route('/api/<string:granularity>/<string:title>', methods=['GET'])
-def api(title,granularity):
+def rest_api(title,granularity):
     title_Hbase = title.replace('_',' ')
     if granularity.lower() not in ("yearly","monthly","daily"):
         raise InvalidAPIUsage('Granularity is one of (Yearly,Monthly,Daily)', status_code=400)

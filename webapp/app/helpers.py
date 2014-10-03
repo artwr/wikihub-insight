@@ -1,7 +1,12 @@
 #!/usr/bin/env python
 import happybase
 import time
+from datetime import datetime, date
+import calendar
 import pandas
+
+
+
 
 def getPoint(query_string):
     conn = happybase.Connection('localhost')
@@ -37,23 +42,74 @@ def getYearlyData(title, yrange = ("2001","2014")):
     conn.close()
     return data_dict
 
-def getData(title, time_granularity = "Y", range = ("2001","2014")):
+# def parseDatePart(date_part,time_granularity):
+#     if time_granularity not in ("Y","M","D"):
+#         return None
+#     if time_granularity=="Y":
+#         return date_part
+#     if time_granularity=="M":
+#         year, month=date_part.split('-')
+#         return year+month
+#     if time_granularity=="D":
+#         year, month, day=date_part.split('-')
+#         return year+month+day
+
+def date_string_to_ts(date_str,granularity,startperiod = True):
+    # Number of days in each month
+    modaynum = {'01': 31, '02': 28, '03': 31, '04': 30, '05': 31, \
+    '06': 30, '07': 31, '08': 31, '09': 30, '10': 31, '11': 30, '12': 31}
+    if granularity not in ("Y","M","D"):
+        return None
+    elif granularity=="D":
+        d=date(int(date_str[:4]),int(date_str[4:6]),int(date_str[6:8]))
+    elif granularity=="M":
+        if startperiod:
+            d=date(int(date_str[:4]),int(date_str[4:6]),1)
+        else:
+            d=date(int(date_str[:4]),int(date_str[4:6]),modaynum[date_str[4:6]])
+    elif granularity=="Y":
+        if startperiod:
+            d=date(int(date_str[:4]),1,1)
+        else:
+            d=date(int(date_str[:4]),12,31
+    return calendar.timegm(d.timetuple())    
+
+
+
+def getData(title, time_granularity = "Y"):
+    start_t = time.time()
+    conn = happybase.Connection('localhost')
+    conn.open()
+    wes = conn.table('wikieditssmall')
+    #we = conn.table('wikiedits')
+    titlestr = title.encode('ascii','ignore')
+    data_dict = {}
+    for key, data in wes.scan(row_prefix=title+'_'+time_granularity+'_'):
+        dict_key = key.replace(title+'_'+time_granularity+'_','')
+        tskey = date_string_to_ts(dict_key)
+        data_dict[tskey] = data["count:edits"]
+    conn.close()
+    end_t = time.time()
+    elapsed_t = start_t-end_t
+    return data_dict
+
+def getRangedData(title, time_granularity = "Y", start, end):
+    #startrow = parseDatePart(start,time_granularity)
+    #endrow = parseDatePart(end,time_granularity)
+    startrow = start.replace('-','')
+    endrow = end.replace('-','')
     start_t = time.time()
     conn = happybase.Connection('localhost')
     conn.open()
     wes = conn.table('wikieditssmall')
     we = conn.table('wikiedits')
     titlestr = title.encode('ascii','ignore')
-    years = range(2001,2012)
+    prefix=title+'_'+time_granularity+'_'
     data_dict = {}
-    for y in years:
-        year=str(y)
-        rowval=wes.row(title+'_'+year)
-        if rowval is not None:
-            if rowval != {}:
-                val = rowval["count:edits"]
-                if val is not None:
-                    data_dict[y] = val
+    for key, data in wes.scan(row_start=prefix+startrow, row_stop=prefix+endrow):
+        dict_key = key.replace(title+'_'+time_granularity+'_','')
+        tskey = date_string_to_ts(dict_key)
+        data_dict[tskey] = data["count:edits"]
     conn.close()
     end_t = time.time()
     elapsed_t = start_t-end_t
@@ -73,59 +129,6 @@ def getData(title, time_granularity = "Y", range = ("2001","2014")):
 #         if rowval is not None:
 #             if rowval != {}:
 #                 val = rowval["count:edits"]
-#                 if val is not None:
-#                     data_dict[y] = val
-#     conn.close()
-#     return data_dict
-
-# def getMonthlyData(title, ymrange = ("2001-01","2012-11")):
-#     conn = happybase.Connection('localhost')
-#     conn.open()
-#     wes = conn.table('wikieditssmall')
-#     we = conn.table('wikiedits')
-#     titlestr = title.encode('ascii','ignore')
-#     startym = ymrange[0].split("-")
-#     endym = ymrange[1].split("-")
-#     starty = startym[0]
-#     startm = startym[1]
-#     endy = endym[0]
-#     endm = endym[1]
-#     data_dict = {}
-#     for m in range(startm,13):
-#         month = format(m, '02')
-#         rowval=wes.row(title+'_'+str(starty)+'_'+month)
-#         if rowval is not None:
-#             if rowval != {}:
-#                 val = rowval["count:editcount"]
-#                 if val is not None:
-#                     data_dict[str(starty)+_+str(m)] = val
-#     for y in range(startm+1,endy):
-#         year=str(y)
-#         for m in range(startm,13):
-        
-#         rowval=wes.row(title+'_'+year)
-#         if rowval is not None:
-#             if rowval != {}:
-#                 val = rowval["count:editcount"]
-#                 if val is not None:
-#                     data_dict[y] = val
-#     conn.close()
-#     return data_dict
-
-# def getDailyData(title, ymdrange = ("2001-01-15","2012-10-31")):
-#     conn = happybase.Connection('localhost')
-#     conn.open()
-#     wes = conn.table('wikieditssmall')
-#     we = conn.table('wikiedits')
-#     titlestr = title.encode('ascii','ignore')
-#     years = range(2001,2012)
-#     data_dict = {}
-#     for y in years:
-#         year=str(y)
-#         rowval=wes.row(title+'_'+year)
-#         if rowval is not None:
-#             if rowval != {}:
-#                 val = rowval["count:editcount"]
 #                 if val is not None:
 #                     data_dict[y] = val
 #     conn.close()
