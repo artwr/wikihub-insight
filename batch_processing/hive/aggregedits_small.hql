@@ -16,12 +16,12 @@ create table stats_small
 as select title, pid, ns, count(distinct contributor_username), count(distinct contributor_ip), count(distinct contributor_ip), count(rid)
 from wiki_small
 where ns = 0
-group by title, pid, ns
+group by title, pid, ns;
 
 create table rev_small
 as select title, pid, ns, SUBSTR(ts,0,4) as year, SUBSTR(ts,6,2) as month, SUBSTR(ts,9,2) as day, rid
 from wiki_small
-where ns = 0
+where ns = 0;
 
 -- create table rev_all
 -- as select title, pid, ns, SUBSTR(ts,0,4) as year, SUBSTR(ts,6,2) as month, SUBSTR(ts,9,2) as day, rid
@@ -42,7 +42,7 @@ from
  UNION
  select title, pid, 'Y' as granularity, year, null, null, count(rid) as editcount 
  from rev_small
- group by title, pid, year ) t
+ group by title, pid, year ) t;
 
 
 -- CREATE EXTERNAL TABLE editcountsmall
