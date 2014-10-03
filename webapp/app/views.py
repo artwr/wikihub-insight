@@ -42,7 +42,7 @@ def page():
     for t in sorted(yearly_data.items(), key=lambda x: x[1]):
         years.append(t[0])
         values.append(t[1])
-    return render_template('page.html', title=titleparam, cal_data=str(caldaily_data), plot_data=str(yearly_data),plot_x=years,plot_y=values)
+    return render_template('page.html', title=titleparam, cal_data=json.dumps(caldaily_data), plot_data=json.dumps(yearly_data),plot_x=years,plot_y=values)
 
 @app.route('/demo', methods=['GET'])
 def demo():
