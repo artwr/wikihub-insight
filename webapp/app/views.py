@@ -58,6 +58,15 @@ def testquery():
     else:
         return None
 
+@app.route('/testranged/', methods=['GET'])
+def testranged():
+    rs = request.query_string
+    if request.args.get("query") is not None:
+        hqs = request.args.get("query")
+        return getPoint(hqs)
+    else:
+        return None
+
 @app.route('/api', methods=['GET'])
 def query_api():
     rs = request.query_string
