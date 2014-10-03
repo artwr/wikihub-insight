@@ -23,12 +23,10 @@
     </div>
   </div>
   <script>
-  var caldata = "{{ cal_data }}";
-  prompt("caldata",caldata);
-  var pdata = "{{ plot_data }}";
-  prompt("plot_data",pdata);
+  var plotdata = "{{ plot_data }}";
   </script>
-  {# <script>
+  <script>
+  var caldata = "{{ cal_data }}";
   var cal = new CalHeatMap();
     cal.init({
         itemSelector: "#cal-heatmap",
@@ -39,15 +37,12 @@
         subDomainTextFormat: "%d",
         considerMissingDataAsZero: true,
         range: 6,
-        data: {{cal_data}},
+        data: caldata,
         displayLegend: false
     });
 
-    {% for datap in cal_data %}
-      console.log(String({{datap}}));
-    {% endfor %}
-  </script> -->
-  <script>
+  </script>
+  {# <script>
   $(function () {
     $('#plot').highcharts({
         chart: {
