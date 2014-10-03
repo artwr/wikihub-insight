@@ -36,8 +36,15 @@
         data: {{cal_data | safe}},
         displayLegend: false
     });
+
+    {% for datap in cal_data %}
+      console.log(String({{datap}}));
+    {% endfor %}
   </script>
   <script>
+  {% for datap2 in plot_data %}
+      console.log(String({{datap2}}));
+  {% endfor %}
   $(function () {
     $('#plot').highcharts({
         chart: {
