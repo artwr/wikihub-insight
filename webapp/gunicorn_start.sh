@@ -27,6 +27,5 @@ exec gunicorn wikihub_worker:app -b 0.0.0.0:80 \
   --user=$USER --group=$GROUP \
   --reload \
   --log-level=debug \
-  --error-logfile=gu_err.log \
   --bind=unix:$SOCKFILE
 
