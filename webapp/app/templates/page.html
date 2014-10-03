@@ -54,7 +54,7 @@
             x: -20 //center
         },
         xAxis: {
-            categories: {{years}}
+            categories: {{years | safe}}
         },
         yAxis: {
             title: {
@@ -77,7 +77,7 @@
         },
         series: [{
             name: {{title}},
-            data: {{values}}
+            data: {{values | safe}}
         }]
     });
 });
