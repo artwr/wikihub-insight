@@ -47,7 +47,7 @@ def test():
     return request.query_string
 
 @app.route('/testquery/', methods=['GET'])
-def test():
+def testquery():
     rs = request.query_string
     if request.args.get("query") is not None:
         hqs = request.args.get("query")
