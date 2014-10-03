@@ -35,11 +35,11 @@ from
  from rev_small
  group by title, pid, year, month, day
  UNION ALL
- select title, pid, 'M' as granularity, year, month, null as day, count(rid) as editcount 
+ select title, pid, 'M' as granularity, year, month, '' as day, count(rid) as editcount 
  from rev_small
  group by title, pid, year, month
  UNION ALL
- select title, pid, 'Y' as granularity, year, null as month, null as day, count(rid) as editcount 
+ select title, pid, 'Y' as granularity, year, '' as month, '' as day, count(rid) as editcount 
  from rev_small
  group by title, pid, year ) t;
 
