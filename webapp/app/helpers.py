@@ -104,7 +104,7 @@ def getRangedData(title, time_granularity = "Y", start="2001", end="2014"):
     for key, data in wes.scan(row_start=prefix+startrow, row_stop=prefix+endrow):
         dict_key = key.replace(title+'_'+time_granularity+'_','')
         tskey = date_string_to_ts(dict_key,time_granularity)
-        data_dict[tskey] = int(data["count:edits"])
+        data_dict[str(tskey)] = int(data["count:edits"])
     conn.close()
     end_t = time.time()
     elapsed_t = start_t-end_t
