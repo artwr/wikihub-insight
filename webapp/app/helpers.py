@@ -88,7 +88,7 @@ def getData(title, time_granularity = "Y"):
     elapsed_t = start_t-end_t
     return data_dict
 
-def getRangedData(title, time_granularity = "Y", start="2001", end="2014"):
+def getRangedData(title, time_granularity = "Y", start="2001", end="2014", cv_dates_to_epoch = True):
     #startrow = parseDatePart(start,time_granularity)
     #endrow = parseDatePart(end,time_granularity)
     startrow = start.replace('-','')
@@ -103,7 +103,10 @@ def getRangedData(title, time_granularity = "Y", start="2001", end="2014"):
     data_dict = {}
     for key, data in wes.scan(row_start=prefix+startrow, row_stop=prefix+endrow):
         dict_key = key.replace(title+'_'+time_granularity+'_','')
-        tskey = date_string_to_ts(dict_key,time_granularity)
+        if cv_dates_to_epoch:
+            tskey = date_string_to_ts(dict_key,time_granularity)
+        else:
+            tskey=dict_key
         data_dict[str(tskey)] = int(data["count:edits"])
     conn.close()
     end_t = time.time()
