@@ -23,7 +23,7 @@
     </div>
   </div>
   <script>
-  var plotdata = "{{ plot_data }}";
+  
   </script>
   <script>
   var caldata = "{{ cal_data }}";
@@ -43,6 +43,8 @@
 
   </script>
   {# <script>
+    var plotx = "{{ plot_x }}";
+    var ploty = "{{ plot_y }}";
   $(function () {
     $('#plot').highcharts({
         chart: {
@@ -55,7 +57,7 @@
             x: -20 //center
         },
         xAxis: {
-            categories: {{years | safe}}
+            categories: plotx
         },
         yAxis: {
             title: {
@@ -78,7 +80,7 @@
         },
         series: [{
             name: {{title}},
-            data: {{values | safe}}
+            data: ploty
         }]
     });
 });

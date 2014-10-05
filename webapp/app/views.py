@@ -71,6 +71,22 @@ def testranged():
     else:
         return None
 
+@app.route('/testcalendar/', methods=['GET'])
+def test_calendar(): 
+    qs = request.query_string
+    if request.args.get("title") is None:
+        raise InvalidAPIUsage('You need to pass a title parameter', status_code=400)
+    titleparam = request.args.get("title")
+    caldaily_data = getRangedData(titleparam, time_granularity = "D", start="2014-04-01", end="2014-09-30")
+    yearly_data = getYearlyData(titleparam)
+    years = []
+    values = []
+    for t in sorted(yearly_data.items(), key=lambda x: x[1]):
+        years.append(t[0])
+        values.append(t[1])
+    return render_template('page.html', title=titleparam, cal_data=json.dumps(caldaily_data), plot_data=json.dumps(yearly_data),plot_x=years,plot_y=values)
+
+
 @app.route('/api', methods=['GET'])
 def query_api():
     rs = request.query_string
