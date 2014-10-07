@@ -69,7 +69,7 @@ def getData(title, time_granularity = "Y", dates_to_epoch = True):
         dict_key = key.replace(title+'_'+time_granularity+'_','')
         if dates_to_epoch:
             tskey = date_string_to_ts(dict_key)
-            tskey = 1000 * tskey
+            tskey = 1000 * int(tskey)
         else:
             tskey = dict_key
         data_dict[tskey] = data["count:edits"]
@@ -95,7 +95,7 @@ def getRangedData(title, time_granularity = "Y", start="2001", end="2014", dates
         dict_key = key.replace(title+'_'+time_granularity+'_','')
         if dates_to_epoch:
             tskey = date_string_to_ts(dict_key,time_granularity)
-            tskey = 1000 * tskey
+            tskey = 1000 * int(tskey)
         else:
             tskey=dict_key
         data_dict[str(tskey)] = int(data["count:edits"])
