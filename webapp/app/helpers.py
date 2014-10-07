@@ -65,7 +65,7 @@ def getData(title, time_granularity = "Y", dates_to_epoch = True):
     we = conn.table('wikiedits')
     titlestr = title.encode('ascii','ignore')
     data_dict = {}
-    for key, data in we.scan(row_prefix=title+'_'+time_granularity+'_'):
+    for key, data in wes.scan(row_prefix=title+'_'+time_granularity+'_'):
         dict_key = key.replace(title+'_'+time_granularity+'_','')
         if dates_to_epoch:
             tskey = date_string_to_ts(dict_key)
@@ -91,7 +91,7 @@ def getRangedData(title, time_granularity = "Y", start="2001", end="2014", dates
     titlestr = title.encode('ascii','ignore')
     prefix=title+'_'+time_granularity+'_'
     data_dict = {}
-    for key, data in we.scan(row_start=prefix+startrow, row_stop=prefix+endrow):
+    for key, data in wes.scan(row_start=prefix+startrow, row_stop=prefix+endrow):
         dict_key = key.replace(title+'_'+time_granularity+'_','')
         if dates_to_epoch:
             tskey = date_string_to_ts(dict_key,time_granularity)
