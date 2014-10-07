@@ -38,18 +38,6 @@ def getYearlyData(title, yrange = ("2001","2014")):
     conn.close()
     return data_dict
 
-# def parseDatePart(date_part,time_granularity):
-#     if time_granularity not in ("Y","M","D"):
-#         return None
-#     if time_granularity=="Y":
-#         return date_part
-#     if time_granularity=="M":
-#         year, month=date_part.split('-')
-#         return year+month
-#     if time_granularity=="D":
-#         year, month, day=date_part.split('-')
-#         return year+month+day
-
 def date_string_to_ts(date_str,granularity,startperiod = True):
     # Number of days in each month
     modaynum = {'01': 31, '02': 28, '03': 31, '04': 30, '05': 31, '06': 30, '07': 31, '08': 31, '09': 30, '10': 31, '11': 30, '12': 31}
@@ -69,26 +57,28 @@ def date_string_to_ts(date_str,granularity,startperiod = True):
             d=date(int(date_str[:4]),12,31)
     return calendar.timegm(d.timetuple()) 
 
-
-
-def getData(title, time_granularity = "Y"):
+def getData(title, time_granularity = "Y", dates_to_epoch = True):
     start_t = time.time()
     conn = happybase.Connection('localhost')
     conn.open()
     wes = conn.table('wikieditssmall')
-    #we = conn.table('wikiedits')
+    we = conn.table('wikiedits')
     titlestr = title.encode('ascii','ignore')
     data_dict = {}
-    for key, data in wes.scan(row_prefix=title+'_'+time_granularity+'_'):
+    for key, data in we.scan(row_prefix=title+'_'+time_granularity+'_'):
         dict_key = key.replace(title+'_'+time_granularity+'_','')
-        tskey = date_string_to_ts(dict_key)
+        if dates_to_epoch:
+            tskey = date_string_to_ts(dict_key)
+            tskey = 1000 * tskey
+        else:
+            tskey = dict_key
         data_dict[tskey] = data["count:edits"]
     conn.close()
     end_t = time.time()
     elapsed_t = start_t-end_t
     return data_dict
 
-def getRangedData(title, time_granularity = "Y", start="2001", end="2014", cv_dates_to_epoch = True):
+def getRangedData(title, time_granularity = "Y", start="2001", end="2014", dates_to_epoch = True):
     #startrow = parseDatePart(start,time_granularity)
     #endrow = parseDatePart(end,time_granularity)
     startrow = start.replace('-','')
@@ -101,10 +91,11 @@ def getRangedData(title, time_granularity = "Y", start="2001", end="2014", cv_da
     titlestr = title.encode('ascii','ignore')
     prefix=title+'_'+time_granularity+'_'
     data_dict = {}
-    for key, data in wes.scan(row_start=prefix+startrow, row_stop=prefix+endrow):
+    for key, data in we.scan(row_start=prefix+startrow, row_stop=prefix+endrow):
         dict_key = key.replace(title+'_'+time_granularity+'_','')
-        if cv_dates_to_epoch:
+        if dates_to_epoch:
             tskey = date_string_to_ts(dict_key,time_granularity)
+            tskey = 1000 * tskey
         else:
             tskey=dict_key
         data_dict[str(tskey)] = int(data["count:edits"])
@@ -116,8 +107,8 @@ def getRangedData(title, time_granularity = "Y", start="2001", end="2014", cv_da
 # def getStats(title):
 #     conn = happybase.Connection('localhost')
 #     conn.open()
-#     wes = conn.table('wikieditssmall')
-#     we = conn.table('wikiedits')
+#     wes = conn.table('stats_small')
+#     we = conn.table('stats_all')
 #     titlestr = title.encode('ascii','ignore')
 #     years = range(2001,2012)
 #     data_dict = {}
