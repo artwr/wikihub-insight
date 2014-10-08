@@ -82,7 +82,7 @@ def getData(title, time_granularity = "Y"):
     data_dict = {}
     for key, data in we.scan(row_prefix=title+'_'+time_granularity+'_'):
         dict_key = key.replace(title+'_'+time_granularity+'_','')
-        data_dict[dict_key] = data["count:edits"]
+        data_dict[dict_key] = int(data["count:edits"])
     conn.close()
     end_t = time.time()
     elapsed_t = start_t-end_t
@@ -106,7 +106,7 @@ def getRangedData(title, time_granularity = "Y", start="2001", end="2014", dates
     data_dict = {}
     for key, data in we.scan(row_start=prefix+startrow, row_stop=prefix+endrow):
         dict_key = key.replace(prefix,'')
-        data_dict[dict_key] = data["count:edits"]
+        data_dict[dict_key] = int(data["count:edits"])
     conn.close()
     end_t = time.time()
     elapsed_t = start_t-end_t
