@@ -5,6 +5,21 @@ from datetime import datetime, date
 import calendar
 import pandas
 
+def convertDateKeys(data_dict):
+    data_dict_cv = {}
+    for k, v in data_dict:
+        if len(k)==4:
+            new_key = 1000*date_string_to_ts(k,"Y")
+        elif len(k)==6:
+            new_key = 1000*date_string_to_ts(k,"M")
+        elif len(k)==8:
+            new_key = 1000*date_string_to_ts(k,"D")
+        else:
+            new_key = k
+        data_dict_cv[new_key]=v
+    return data_dict_cv
+
+
 def getPoint(query_string):
     conn = happybase.Connection('localhost')
     conn.open()

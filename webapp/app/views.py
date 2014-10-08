@@ -5,10 +5,8 @@ from helpers import getYearlyData
 from helpers import getData
 from helpers import getRangedData
 from helpers import getPoint
-#from helpers import getMonthlyData
-#from helpers import getDailyData
+from helpers import convertDateKeys
 import json
-#from starbase import Connection
 import happybase
 
 # db = mdb.connect(user="api", host="127.0.0.1", passwd="msqlapi", db="gdelt", charset='utf8')
@@ -37,12 +35,13 @@ def page():
     titleparam = request.args.get("title")
     caldaily_data = getRangedData(titleparam, time_granularity = "D", start="2014-04-01", end="2014-09-30")
     yearly_data = getData(titleparam, time_granularity = "Y")
+    yearly_data_js = convertDateKeys(yearly_data)
     years = []
     values = []
-    for t in sorted(yearly_data.items(), key=lambda x: x[1]):
+    for t in sorted(yearly_data_js.items(), key=lambda x: x[1]):
         years.append(t[0])
         values.append(t[1])
-    return render_template('page.html', title=titleparam, cal_data=json.dumps(caldaily_data), plot_data=json.dumps(yearly_data),plot_x=years,plot_y=values)
+    return render_template('page.html', title=titleparam, cal_data=json.dumps(caldaily_data), plot_data=json.dumps(yearly_data_js),plot_x=years,plot_y=values)
 
 @app.route('/demo', methods=['GET'])
 def demo():
