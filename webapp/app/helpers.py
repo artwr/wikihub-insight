@@ -7,7 +7,7 @@ import pandas
 
 def convertDateKeys(data_dict):
     data_dict_cv = {}
-    for k, v in data_dict:
+    for k, v in data_dict.items():
         if len(k)==4:
             new_key = 1000*date_string_to_ts(k,"Y")
         elif len(k)==6:
