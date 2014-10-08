@@ -81,14 +81,7 @@ def test_calendar():
         raise InvalidAPIUsage('You need to pass a title parameter', status_code=400)
     titleparam = request.args.get("title")
     caldaily_data = getRangedData(titleparam, time_granularity = "D", start="2014-04-01", end="2014-09-30")
-    yearly_data = getYearlyData(titleparam)
-    years = []
-    values = []
-    for t in sorted(yearly_data.items(), key=lambda x: x[1]):
-        years.append(t[0])
-        values.append(t[1])
-    return render_template('calendar.html', title=titleparam, cal_data=json.dumps(caldaily_data), plot_data=json.dumps(yearly_data),plot_x=years,plot_y=values)
-
+    return render_template('calendar.html', title=titleparam, cal_data=json.dumps(caldaily_data))
 
 @app.route('/testhighcharts/', methods=['GET'])
 def test_charts(): 
@@ -96,14 +89,15 @@ def test_charts():
     if request.args.get("title") is None:
         raise InvalidAPIUsage('You need to pass a title parameter', status_code=400)
     titleparam = request.args.get("title")
-    caldaily_data = getRangedData(titleparam, time_granularity = "D", start="2014-04-01", end="2014-09-30")
-    yearly_data = getYearlyData(titleparam)
-    years = []
-    values = []
-    for t in sorted(yearly_data.items(), key=lambda x: x[1]):
-        years.append(t[0])
-        values.append(t[1])
-    return render_template('highcharts.html', title=titleparam, cal_data=json.dumps(caldaily_data), plot_data=json.dumps(yearly_data),plot_x=years,plot_y=values)
+    yearly_data = getData(titleparam, time_granularity = "Y")
+    monthly_data = getData(titleparam, time_granularity = "M")
+    yearly_data_js = convertDateKeys(yearly_data)
+    monthly_data_js = convertDateKeys(monthly_data)
+    for t1 in sorted(yearly_data_js.items(), key=lambda x: x[1]):
+        ydata.append(list(t1))
+    for t2 in sorted(monthly_data_js.items(), key=lambda x: x[1]):
+        mdata.append(list(t2))
+    return render_template('highcharts.html', title=titleparam, yeardata=json.dumps(yearly_data_js), ydata=json.dumps(ydata), mdata=json.dumps(mdata))
 
 @app.route('/api', methods=['GET'])
 def query_api():
