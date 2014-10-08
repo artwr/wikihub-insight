@@ -93,6 +93,8 @@ def test_charts():
     monthly_data = getData(titleparam, time_granularity = "M")
     yearly_data_js = convertDateKeys(yearly_data)
     monthly_data_js = convertDateKeys(monthly_data)
+    mdata=[]
+    ydata=[]
     for t1 in sorted(yearly_data_js.items(), key=lambda x: x[1]):
         ydata.append(list(t1))
     for t2 in sorted(monthly_data_js.items(), key=lambda x: x[1]):
