@@ -108,11 +108,13 @@ def query_api():
         title=request.args.get("title")
     if request.args.get("granularity") is None:
         raise InvalidAPIUsage('You need to set a granularity among (Yearly,Monthly,Daily)', status_code=400)
-    elif granularity.lower() not in ("yearly","monthly","daily"):
-        raise InvalidAPIUsage('Granularity is one of (Yearly,Monthly,Daily)', status_code=400)
     else:
-        gr_raw=request.args.get("granularity")
-        gr=gr_raw[0].upper()
+        granularity = request.args.get("granularity")
+        if granularity.lower() not in ("yearly","monthly","daily"):
+            raise InvalidAPIUsage('Granularity is one of (Yearly,Monthly,Daily)', status_code=400)
+        else:
+            gr_raw=request.args.get("granularity")
+            gr=gr_raw[0].upper()
     if request.args.get("start") is None or request.args.get("end") is None:
         raise InvalidAPIUsage('You need to set both start and end parameters', status_code=400)
     else:
