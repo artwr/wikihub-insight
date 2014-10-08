@@ -5,10 +5,6 @@
 <script src="{{ url_for('static', filename='vendor/jquery/jquery-2.1.1.min.js') }}"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script src="http://code.highcharts.com/modules/exporting.js"></script>
-<!-- Add d3.js -->
-<script type="text/javascript" src="//d3js.org/d3.v3.min.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.min.js"></script>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css" />
 {% endblock %}
 
 {% block content %}
@@ -21,7 +17,7 @@
     </div>
   </div>
   <script>
-    var ydata = "{{ ydata }}";
+  var y_data = "{{ ydata }}";
   $(function () {
     $('#plot').highcharts({
         chart: {
@@ -57,7 +53,7 @@
             borderWidth: 0
         },
         series: [{
-            name: '{{title}}',
+            name: '{{ title }}',
             data: {{ydata | safe}}
         }]
     });
