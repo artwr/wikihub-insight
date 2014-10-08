@@ -15,13 +15,13 @@
   <div class="container">
     <div class="starter-template">
       <h1>{{title}}</h1>
-      <h3>Activity in the past 6 months</h3>
+      <h3>Yearly Activity</h3>
       <p>
       <div id="plot" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     </div>
   </div>
   <script>
-    var  = "{{ plot_x }}";
+    var ydata = "{{ ydata }}";
   $(function () {
     $('#plot').highcharts({
         chart: {
@@ -57,8 +57,8 @@
             borderWidth: 0
         },
         series: [{
-            name: {{title}},
-            data: ploty
+            name: '{{title}}',
+            data: {{ydata | safe}}
         }]
     });
 });
