@@ -26,7 +26,7 @@ for key, data in we.scan(row_prefix=title+'_Y_'):
 
 prefix=title+'_Y_'
 startrow="2011"
-endrow="2014"
+endrow="2015"
 
 print "row scan"
 data_dict3 = {}
@@ -35,7 +35,7 @@ for key, data in we.scan(row_start=prefix+startrow, row_stop=prefix+endrow):
 
 print "row scan"
 data_dict4 = {}
-for key, data in we.scan(row_prefix='iPhone'+'_M_'):
+for key, data in we.scan(row_prefix='IPhone'+'_M_'):
     print key, data
 
 
