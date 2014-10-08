@@ -43,9 +43,6 @@
   document.write(caldata);
   </script>
   <script>
-    var plotdata = "{{plot_data}}";
-    var y_data = "{{ ydata | safe}}";
-    var m_data = "{{ mdata | safe}}";
   $(function () {
     $('#plot').highcharts({
         chart: {
@@ -58,12 +55,10 @@
             x: -20 //center
         },
         xAxis: {
-            type: 'datetime',
-            title: {
-                text: 'Date'
-            }
+            type: 'datetime'
         },
         yAxis: {
+            floor: 0,
             title: {
                 text: 'Number of edits'
             },
@@ -83,12 +78,11 @@
             borderWidth: 0
         },
         series: [{
-            name: {{title}},
-            data: {{mdata | safe}}
+            name: '{{ title }}',
+            data: {{ydata | safe}}
         }]
     });
 });
-  document.write(m_data);
   </script>
 {% endblock %}
 
