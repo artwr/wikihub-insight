@@ -33,7 +33,7 @@ def page():
     if request.args.get("title") is None:
         raise InvalidAPIUsage('You need to pass a title parameter', status_code=400)
     titleparam = request.args.get("title")
-    caldaily_data = getRangedData(titleparam, time_granularity = "D", start="2014-04-01", end="2014-09-30")
+    caldaily_data = getRangedData(titleparam, time_granularity = "D", start="20140401", end="20140930")
     caldaily_data_js = convertDateKeys(caldaily_data)
     yearly_data = getData(titleparam, time_granularity = "Y")
     monthly_data = getData(titleparam, time_granularity = "M")
