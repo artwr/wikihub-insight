@@ -139,7 +139,7 @@ def rest_api(title,granularity):
     #titleparam = request.args.get("title")
     #data = getYearlyData(title)
     #default_ranges = {"Y":("2001","2014"),"M":("2001-01","2014-09"),"D":("2001-01-15","2014-09-15")}
-    data = getRangedData(title, time_granularity=g_code, dates_to_epoch = False)
+    data = getData(title, time_granularity=g_code)
     # Queries the DB and returns data
     # cur = db.cursor()   
     return jsonify(data)

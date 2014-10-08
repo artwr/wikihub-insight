@@ -78,6 +78,9 @@ def getRangedData(title, time_granularity = "Y", start="2001", end="2014", dates
     #endrow = parseDatePart(end,time_granularity)
     startrow = start.replace('-','')
     endrow = end.replace('-','')
+    endrow_int = int(endrow)
+    endrow_int +=1
+    endrow=str(endrow_int)
     start_t = time.time()
     conn = happybase.Connection('localhost')
     conn.open()
