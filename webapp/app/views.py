@@ -97,7 +97,7 @@ def test_charts():
         ydata.append(list(t1))
     for t2 in sorted(monthly_data_js.items(), key=lambda x: x[1]):
         mdata.append(list(t2))
-    return render_template('highcharts.html', title=titleparam, yeardata=json.dumps(yearly_data_js), ydata=json.dumps(ydata), mdata=json.dumps(mdata))
+    return render_template('highcharts.html', title=titleparam, ydata=ydata, mdata=mdata)
 
 @app.route('/api', methods=['GET'])
 def query_api():
