@@ -95,9 +95,9 @@ def test_charts():
     monthly_data_js = convertDateKeys(monthly_data)
     mdata=[]
     ydata=[]
-    for t1 in sorted(yearly_data_js.items(), key=lambda x: x[1]):
+    for t1 in sorted(yearly_data_js.items(), key=lambda x: x[0]):
         ydata.append(list(t1))
-    for t2 in sorted(monthly_data_js.items(), key=lambda x: x[1]):
+    for t2 in sorted(monthly_data_js.items(), key=lambda x: x[0]):
         mdata.append(list(t2))
     return render_template('highcharts.html', title=titleparam, ydata=ydata, mdata=mdata)
 
