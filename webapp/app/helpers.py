@@ -10,7 +10,7 @@ def getPoint(query_string):
     conn.open()
     wes = conn.table('wikieditssmall')
     we = conn.table('wikiedits')
-    rowval=wes.row(title+'_Y_'+year)
+    rowval=we.row(title+'_Y_'+year)
     if rowval is not None and rowval != {}:
             val = rowval["count:edits"]
             if val is not None:
@@ -30,7 +30,7 @@ def getYearlyData(title, yrange = ("2001","2014")):
     data_dict = {}
     for y in years:
         year=str(y)
-        rowval=wes.row(title+'_Y_'+year)
+        rowval=we.row(title+'_Y_'+year)
         if rowval is not None and rowval != {}:
                 val = rowval["count:edits"]
                 if val is not None:
@@ -57,7 +57,7 @@ def date_string_to_ts(date_str,granularity,startperiod = True):
             d=date(int(date_str[:4]),12,31)
     return calendar.timegm(d.timetuple()) 
 
-def getData(title, time_granularity = "Y", dates_to_epoch = True):
+def getData(title, time_granularity = "Y"):
     start_t = time.time()
     conn = happybase.Connection('localhost')
     conn.open()
@@ -65,14 +65,9 @@ def getData(title, time_granularity = "Y", dates_to_epoch = True):
     we = conn.table('wikiedits')
     titlestr = title.encode('ascii','ignore')
     data_dict = {}
-    for key, data in wes.scan(row_prefix=title+'_'+time_granularity+'_'):
+    for key, data in we.scan(row_prefix=title+'_'+time_granularity+'_'):
         dict_key = key.replace(title+'_'+time_granularity+'_','')
-        if dates_to_epoch:
-            tskey = date_string_to_ts(dict_key)
-            #tskey = 1000 * int(tskey)
-        else:
-            tskey = dict_key
-        data_dict[tskey] = data["count:edits"]
+        data_dict[dict_key] = data["count:edits"]
     conn.close()
     end_t = time.time()
     elapsed_t = start_t-end_t
@@ -91,14 +86,9 @@ def getRangedData(title, time_granularity = "Y", start="2001", end="2014", dates
     titlestr = title.encode('ascii','ignore')
     prefix=title+'_'+time_granularity+'_'
     data_dict = {}
-    for key, data in wes.scan(row_start=prefix+startrow, row_stop=prefix+endrow):
-        dict_key = key.replace(title+'_'+time_granularity+'_','')
-        if dates_to_epoch:
-            tskey = date_string_to_ts(dict_key,time_granularity)
-            #tskey = 1000 * int(tskey)
-        else:
-            tskey=dict_key
-        data_dict[str(tskey)] = int(data["count:edits"])
+    for key, data in we.scan(row_start=prefix+startrow, row_stop=prefix+endrow):
+        dict_key = key.replace(prefix,'')
+        data_dict[dict_key] = data["count:edits"]
     conn.close()
     end_t = time.time()
     elapsed_t = start_t-end_t
