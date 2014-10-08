@@ -42,9 +42,10 @@
     });
 
   </script>
-  {# <script>
-    var plotx = "{{ plot_x }}";
-    var ploty = "{{ plot_y }}";
+  <script>
+    var plotdata = "{{plot_data}}"
+    var ydata = "{{ ydata }}"
+    var mdata = "{{ mdata }}"
   $(function () {
     $('#plot').highcharts({
         chart: {
@@ -57,7 +58,10 @@
             x: -20 //center
         },
         xAxis: {
-            categories: plotx
+            type: 'datetime',
+            title: {
+                text: 'Date'
+            }
         },
         yAxis: {
             title: {
@@ -80,11 +84,11 @@
         },
         series: [{
             name: {{title}},
-            data: ploty
+            data: mdata
         }]
     });
 });
-  </script> #}
+  </script>
 {% endblock %}
 
 {% block footer %}

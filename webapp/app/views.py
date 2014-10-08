@@ -34,14 +34,18 @@ def page():
         raise InvalidAPIUsage('You need to pass a title parameter', status_code=400)
     titleparam = request.args.get("title")
     caldaily_data = getRangedData(titleparam, time_granularity = "D", start="2014-04-01", end="2014-09-30")
+    caldaily_data_js = convertDateKeys(caldaily_data)
     yearly_data = getData(titleparam, time_granularity = "Y")
+    monthly_data = getData(titleparam, time_granularity = "M")
     yearly_data_js = convertDateKeys(yearly_data)
-    years = []
-    values = []
-    for t in sorted(yearly_data_js.items(), key=lambda x: x[1]):
-        years.append(t[0])
-        values.append(t[1])
-    return render_template('page.html', title=titleparam, cal_data=json.dumps(caldaily_data), plot_data=json.dumps(yearly_data_js),plot_x=years,plot_y=values)
+    monthly_data_js = convertDateKeys(monthly_data)
+    ydata = []
+    mdata = []
+    for t1 in sorted(yearly_data_js.items(), key=lambda x: x[1]):
+        ydata.append(list(t1))
+    for t2 in sorted(monthly_data_js.items(), key=lambda x: x[1]):
+        mdata.append(list(t2))
+    return render_template('page.html', title=titleparam, cal_data=json.dumps(caldaily_data_js), yeardata=json.dumps(yearly_data_js), ydata=ydata, mdata=mdata)
 
 @app.route('/demo', methods=['GET'])
 def demo():
