@@ -13,13 +13,21 @@
       <h1>{{title}}</h1>
       <h3>Edit Activity</h3>
       <p>
-      <div id="plot" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      <h4>Yearly</h4>
+      <p>
+      <div id="ploty" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      <h4>Monthly</h4>
+      <p>
+      <div id="plotm" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      <!-- <h4>Daily</h4>
+      <p>
+      <div id="plotd" style="min-width: 310px; height: 400px; margin: 0 auto"></div> -->
     </div>
   </div>
   <script>
   var y_data = "{{ ydata }}";
   $(function () {
-    $('#plot').highcharts({
+    $('#ploty').highcharts({
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: 1,//null,
@@ -57,6 +65,47 @@
             data: {{ydata | safe}}
         }]
     });
+
+    $('#plotm').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            zoomType: 'x',
+            plotBorderWidth: 1,//null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Edit Counts',
+            x: -20 //center
+        },
+        xAxis: {
+            type: 'datetime'
+        },
+        yAxis: {
+            floor: 0,
+            title: {
+                text: 'Number of edits'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: 'edits'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: '{{ title }}',
+            data: {{mdata | safe}}
+        }]
+    });
+
 });
   </script>
 {% endblock %}
