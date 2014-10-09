@@ -37,15 +37,20 @@ def page():
     caldaily_data_js = convertDateKeys(caldaily_data, JS=False)
     yearly_data = getData(titleparam, time_granularity = "Y")
     monthly_data = getData(titleparam, time_granularity = "M")
+    daily_data = getData(titleparam, time_granularity = "D")
     yearly_data_js = convertDateKeys(yearly_data)
     monthly_data_js = convertDateKeys(monthly_data)
+    daily_data_js = convertDateKeys(daily_data)
     ydata = []
     mdata = []
+    ddata = []
     for t1 in sorted(yearly_data_js.items(), key=lambda x: x[0]):
         ydata.append(list(t1))
     for t2 in sorted(monthly_data_js.items(), key=lambda x: x[0]):
         mdata.append(list(t2))
-    return render_template('page.html', title=titleparam, cal_data=caldaily_data_js, ydata=ydata, mdata=mdata)
+    for t3 in sorted(daily_data_js.items(), key=lambda x: x[0]):
+        mdata.append(list(t3))
+    return render_template('page.html', title=titleparam, cal_data=caldaily_data_js, ydata=ydata, mdata=mdata, ddata=ddata)
 
 @app.route('/demo', methods=['GET'])
 def demo():

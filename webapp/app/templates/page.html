@@ -23,6 +23,8 @@
       <div id="ploty" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
       <p>
       <div id="plotm" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      <p>
+      <div id="plotd" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     </div>
   </div>
   <script>
@@ -120,6 +122,46 @@
         series: [{
             name: '{{ title }}',
             data: {{mdata | safe}}
+        }]
+    });
+
+    $('#plotd').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            zoomType: 'x',
+            plotBorderWidth: 1,//null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Daily Edits',
+            x: -20 //center
+        },
+        xAxis: {
+            type: 'datetime'
+        },
+        yAxis: {
+            floor: 0,
+            title: {
+                text: 'Number of edits'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: 'edits'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: '{{ title }}',
+            data: {{ddata | safe}}
         }]
     });
 
