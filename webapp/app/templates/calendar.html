@@ -37,7 +37,7 @@
         subDomainTextFormat: "%d",
         considerMissingDataAsZero: true,
         range: 6,
-        data: caldata,
+        data: {{ cal_data | safe}},
         displayLegend: false
     });
   </script>

@@ -81,7 +81,8 @@ def test_calendar():
         raise InvalidAPIUsage('You need to pass a title parameter', status_code=400)
     titleparam = request.args.get("title")
     caldaily_data = getRangedData(titleparam, time_granularity = "D", start="2014-04-01", end="2014-09-30")
-    return render_template('calendar.html', title=titleparam, cal_data=json.dumps(caldaily_data))
+    cal_data = convertDateKeys(caldaily_data, JS=False)
+    return render_template('calendar.html', title=titleparam, cal_data=cal_data)
 
 @app.route('/testhighcharts/', methods=['GET'])
 def test_charts(): 

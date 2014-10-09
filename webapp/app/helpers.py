@@ -5,15 +5,18 @@ from datetime import datetime, date
 import calendar
 import pandas
 
-def convertDateKeys(data_dict):
+def convertDateKeys(data_dict, JS = True):
     data_dict_cv = {}
+    cvfactor=1
+    if JS:
+        cvfactor=1000
     for k, v in data_dict.items():
         if len(k)==4:
-            new_key = 1000*date_string_to_ts(k,"Y")
+            new_key = cvfactor*date_string_to_ts(k,"Y")
         elif len(k)==6:
-            new_key = 1000*date_string_to_ts(k,"M")
+            new_key = cvfactor*date_string_to_ts(k,"M")
         elif len(k)==8:
-            new_key = 1000*date_string_to_ts(k,"D")
+            new_key = cvfactor*date_string_to_ts(k,"D")
         else:
             new_key = k
         data_dict_cv[new_key]=v
