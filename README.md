@@ -6,7 +6,7 @@ Wikihub
 
 *N.B.: Wikihub is still in alpha*
 
-Wikipedia is an amazing tool, but it is sometimes difficult to assess how active a page is or to find statistics on edits.
+Wikipedia is an amazing tool, but it is sometimes difficult to assess how active a page is or to find statistics on edits. [Wikihub](http://wikihub.info/) aims at providing painless access to summary statistics and edits timeseries.
 
 ## Data Pipeline
 ![The Wikihub Pipeline](images/pipeline2.png "Jaunt Pipeline")
@@ -17,7 +17,6 @@ The files are then put into HDFS for aggregation in Hive. Data is then inserted 
 
 A Flask API serves API requests offering statistics on a per page basis.
 
-###
 
 ### Additional setup requirements
 
