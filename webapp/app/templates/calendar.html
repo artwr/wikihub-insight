@@ -33,11 +33,11 @@
         domain: "month",
         subDomain: "day",
         start: new Date(2014, 03, 01),
-        cellSize: 20,
+        cellSize: 30,
         subDomainTextFormat: "%d",
         range: 6,
         data: {{ cal_data | safe}},
-        displayLegend: true
+        displayLegend: false
     });
   </script>
 {% endblock %}

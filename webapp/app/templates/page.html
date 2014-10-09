@@ -19,10 +19,8 @@
       <h4>Activity in the past 6 months</h4>
       <p>
       <div id="cal-heatmap" style="min-width: 310px; margin: 0 auto"></div>
-      <h4>Yearly</h4>
       <p>
       <div id="ploty" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-      <h4>Monthly</h4>
       <p>
       <div id="plotm" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     </div>
@@ -37,11 +35,11 @@
         domain: "month",
         subDomain: "day",
         start: new Date(2014, 03, 01),
-        cellSize: 20,
+        cellSize: 30,
         subDomainTextFormat: "%d",
         range: 6,
         data: {{ cal_data | safe}},
-        displayLegend: true
+        displayLegend: false
     });
   </script>
   <script>
@@ -53,7 +51,7 @@
             plotShadow: false
         },
         title: {
-            text: 'Edit Counts',
+            text: 'Edits by Year',
             x: -20 //center
         },
         xAxis: {
@@ -93,7 +91,7 @@
             plotShadow: false
         },
         title: {
-            text: 'Edit Counts',
+            text: 'Monthly Edits',
             x: -20 //center
         },
         xAxis: {
