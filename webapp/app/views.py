@@ -49,7 +49,7 @@ def page():
     for t2 in sorted(monthly_data_js.items(), key=lambda x: x[0]):
         mdata.append(list(t2))
     for t3 in sorted(daily_data_js.items(), key=lambda x: x[0]):
-        mdata.append(list(t3))
+        ddata.append(list(t3))
     return render_template('page.html', title=titleparam, cal_data=caldaily_data_js, ydata=ydata, mdata=mdata, ddata=ddata)
 
 @app.route('/demo', methods=['GET'])
