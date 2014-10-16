@@ -4,7 +4,7 @@ Wikihub
 
 ### Building a portal to provide Github-like stats for Wikipedia Pages.
 
-*N.B.: Wikihub is still in alpha*
+*N.B.: Wikihub is still in alpha. While the AWS cluster is up the app is available at [http://wikihub.info/](http://wikihub.info/)*
 
 Wikipedia is an amazing tool, but it is sometimes difficult to assess how active a page is or to find statistics on edits. [Wikihub](http://wikihub.info/) aims at providing painless access to summary statistics and edits timeseries.
 
